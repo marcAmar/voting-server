@@ -10,12 +10,12 @@ export function setEntries(state, entries) {
 }
 function getWinners(vote) {
   if (!vote) return [];
-  const [a, b] = vote.get('pair');
-  const aVotes = vote.getIn(['tally', a], 0);
-  const bVotes = vote.getIn(['tally', b], 0);
-  if      (aVotes > bVotes)  return [a];
-  else if (aVotes < bVotes)  return [b];
-  else                       return [a, b];
+  const [one, two] = vote.get('pair');
+  const oneVotes = vote.getIn(['tally', one], 0);
+  const twoVotes = vote.getIn(['tally', two], 0);
+  if      (oneVotes > twoVotes)  return [one];
+  else if (oneVotes < twoVotes)  return [two];
+  else                       return [one, two];
 }
 
 
@@ -34,9 +34,9 @@ export function next(state) {
  }
 }
 
-export function vote(state, entry) {
-  return state.updateIn(
-    ['vote', 'tally', entry],
+export function vote(voteState, entry) {
+  return voteState.updateIn(
+    ['tally', entry],
     0,
     tally => tally + 1
   );
